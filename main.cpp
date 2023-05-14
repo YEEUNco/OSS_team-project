@@ -1,5 +1,9 @@
 #include <iostream>
 #include <algorithm>
+#include <cassert>
+#include <iomanip>
+
+using namespace std;
 
 struct Node{
     string name;
@@ -8,6 +12,9 @@ struct Node{
     string time;
     string off;
     string rating;
+	int reviewNum;
+	string book;
+	string breakTime;
     vector<string> review;
     Node* prev;
     Node* next;
@@ -23,7 +30,7 @@ struct List{
         head = new Node{}; tail = new Node{};
         head->next = tail; tail->prev = head;
     }
-}
+};
 
 using pNode = Node*;
 using pList = List*;
@@ -41,7 +48,6 @@ pNode last(pList p) {
 }
 
 pNode findGu(pList p, string str) {
-	DPRINT(cout << ">find val=" << val << endl;);
 	
 	pNode curr = begin(p);
 	while(curr!=end(p) && curr->gu != str){
@@ -52,7 +58,6 @@ pNode findGu(pList p, string str) {
 }
 
 pNode findType(pList p, string str) {
-	DPRINT(cout << ">find val=" << val << endl;);
 	
 	pNode curr = begin(p);
 	while(curr!=end(p) && curr->type != str){
@@ -63,10 +68,9 @@ pNode findType(pList p, string str) {
 }
 
 pNode findType(pList p, string str) {
-	DPRINT(cout << ">find val=" << val << endl;);
 	
 	pNode curr = begin(p);
-	while(curr!=end(p) && curr->Type != str){
+	while(curr!=end(p) && curr->type != str){
 		curr=curr->next;
 	}
 
@@ -83,7 +87,7 @@ pNode findName(pList p, string str){
 void clear(pList p) {
 	if (empty(p)) return;
 
-	DPRINT(cout << ">clear: ";);
+	//DPRINT(cout << ">clear: ";);
 	pNode curr = begin(p);
 	while (curr != end(p)) {
 		pNode prev = curr;
@@ -113,6 +117,12 @@ void erase(pNode x) {
 	x->next->prev = x->prev;
 	delete x;
 }
+//이부분도 고칠 것!!
+void insert(pNode x, ) {
+	pNode node = new Node{ val, x->prev, x };
+	x->prev = x->prev->next = node;
+
+}
 
 void erase(pList p, pNode x) {	// checks if x is tail or not
 	if (x == end(p)) return;
@@ -120,30 +130,23 @@ void erase(pList p, pNode x) {	// checks if x is tail or not
 }
 
 void pop_front(pList p) {
-	DPRINT(cout << ">pop_front\n";);
+	
 	if (!empty(p)) erase(begin(p));
-	DPRINT(cout << "<pop_front\n";);
 }
 
 // removes the last node in the list. O(1)
 void pop_back(pList p) {
-	DPRINT(cout << ">pop_back\n";);
 	if (!empty(p)) erase(end(p)->prev);
-	DPRINT(cout << "<pop_back\n";);
 }
 
 void pop(pList p, string str) {
-	DPRINT(cout << ">pop val=" << val << endl;);
 	//cout << "your code here\n";
 	erase(p, findName(p, str));
-	DPRINT(cout << "<pop\n";);
 }
 
-void pop_all(pList p, int val) {
-	DPRINT(cout << ">pop_all val=" << val << endl;);
-
+void pop_all(pList p, string str) {
 	for (pNode c = begin(p); c != end(p); c = c->next) {
-		if(c->data == val) {
+		if(c->name == str) {
 			pNode n = c->prev;
 			erase(p,c);
 			c = n;
@@ -152,7 +155,7 @@ void pop_all(pList p, int val) {
 } // faster version
 
 void pop_backN(pList p, int N) {
-	DPRINT(cout << ">pop_backN N=" << N << endl;);
+
 	int psize = size(p);
 	if (N <= 0 || N > psize) N = psize;
 	for (int i = 0; i < N; i++) {
@@ -161,21 +164,19 @@ void pop_backN(pList p, int N) {
 		pop_back(p);
 	}
 	cout << "\n";
-	DPRINT(cout << "<pop_backN\n";);
+
 }
 
 void push_back(pList p, int val) {
-	DPRINT(cout << ">push_back val=" << val << endl;);
 	insert(end(p), val);
-	DPRINT(cout << "<push_back\n";);
 }
 //push 이 부분 고치기!!!
 void push(pList p, int val, int x) {
-	DPRINT(cout << ">push val=" << val << endl;);
+	
 	//cout << "your code here: use find()\n";
 	if(find(p,x)==end(p)) return;
 	insert(find(p,x), val);
-	DPRINT(cout << "<push\n";);
+
 }
 
 int main(){
