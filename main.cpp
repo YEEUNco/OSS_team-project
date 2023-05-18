@@ -179,6 +179,14 @@ void push(pList p, int val, int x) {
 
 }
 
+void FileLoad(pList p){
+
+}
+
+void FileSave(pList p){
+	
+}
+
 int main(){
     
 }
