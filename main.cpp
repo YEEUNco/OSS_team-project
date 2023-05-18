@@ -18,7 +18,16 @@ struct Node{
     vector<string> review;
     Node* prev;
     Node* next;
-    Node(Node* p = nullptr, Node* x = nullptr){
+    Node(string n = "name", string g = "gu", string ty = "type", string ti = "time", string o = "off",string ra = "rating", int re = 0, string bo = "book", string bre = "break",Node* p = nullptr, Node* x = nullptr){
+		name = n;
+		gu = g;
+		type = ty;
+		time = ti;
+		off = o;
+		rating = ra;
+		reviewNum = re;
+		book = bo;
+		breakTime = bre;
         prev = p; next = x;
     }
 };
@@ -67,15 +76,6 @@ pNode findType(pList p, string str) {
 	return curr;
 }
 
-pNode findType(pList p, string str) {
-	
-	pNode curr = begin(p);
-	while(curr!=end(p) && curr->type != str){
-		curr=curr->next;
-	}
-
-	return curr;
-}
 
 pNode findName(pList p, string str){
 
@@ -118,8 +118,8 @@ void erase(pNode x) {
 	delete x;
 }
 //이부분도 고칠 것!!
-void insert(pNode x, ) {
-	pNode node = new Node{ val, x->prev, x };
+void insert(pNode x, string namex, string gux, string typex, string timex, string offx, string ratingx, int reviewNumx, string bookx, string breakTimex) {
+	pNode node = new Node{ namex,gux, typex, timex, offx, ratingx, reviewNumx, bookx,  breakTimex , x->prev, x };
 	x->prev = x->prev->next = node;
 
 }
@@ -129,21 +129,23 @@ void erase(pList p, pNode x) {	// checks if x is tail or not
 	erase(x);
 }
 
+//crude의 delete 기능
 void pop_front(pList p) {
 	
 	if (!empty(p)) erase(begin(p));
 }
 
-// removes the last node in the list. O(1)
+// crude의 delete기능
 void pop_back(pList p) {
 	if (!empty(p)) erase(end(p)->prev);
 }
 
+//crud의 delete기능
 void pop(pList p, string str) {
 	//cout << "your code here\n";
 	erase(p, findName(p, str));
 }
-
+//모두 delete
 void pop_all(pList p, string str) {
 	for (pNode c = begin(p); c != end(p); c = c->next) {
 		if(c->name == str) {
@@ -154,6 +156,7 @@ void pop_all(pList p, string str) {
 	} 	// O(n) 
 } // faster version
 
+/*
 void pop_backN(pList p, int N) {
 
 	int psize = size(p);
@@ -164,20 +167,21 @@ void pop_backN(pList p, int N) {
 		pop_back(p);
 	}
 	cout << "\n";
-
 }
+*/
 
-void push_back(pList p, int val) {
-	insert(end(p), val);
+void push_back(pList p, string namex, string gux, string typex, string timex, string offx, string ratingx, int reviewNumx, string bookx, string breakTimex) {
+	insert(end(p), namex, gux, typex,timex, offx, ratingx, reviewNumx,bookx, breakTimex );
 }
-//push 이 부분 고치기!!!
-void push(pList p, int val, int x) {
+/* 굳이 필요없는 기능..
+void push(pList p, string namex, string gux, string typex, string timex, string offx, string ratingx, int reviewNumx, string bookx, string breakTimex, int x) {
 	
 	//cout << "your code here: use find()\n";
-	if(find(p,x)==end(p)) return;
-	insert(find(p,x), val);
+	if(findName(p,namex)==end(p)) return;
+	insert(findName(p,namex),namex,gux, typex, timex, offx, ratingx, reviewNumx, bookx, breakTimex );
 
 }
+*/
 
 void FileLoad(pList p){
 
