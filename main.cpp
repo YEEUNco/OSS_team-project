@@ -82,6 +82,12 @@ pNode findName(pList p, string str){
     pNode curr = begin(p);
     while(curr != end(p) && curr->name != str)
         curr = curr->next;
+
+	return curr;
+}
+
+bool empty(pList p) {
+	return begin(p) == end(p);
 }
 
 void clear(pList p) {
@@ -98,10 +104,6 @@ void clear(pList p) {
 	p->head->next = p->tail;			// set tail at head
 	p->tail->prev = p->head;			// set head at tail
 	cout << "\n\tCleared...\n";
-}
-
-bool empty(pList p) {
-	return begin(p) == end(p);
 }
 
 int size(pList p) {
@@ -123,7 +125,7 @@ void insert(pNode x, string namex, string gux, string typex, string timex, strin
 	x->prev = x->prev->next = node;
 
 }
-
+//delete기능
 void erase(pList p, pNode x) {	// checks if x is tail or not
 	if (x == end(p)) return;
 	erase(x);
