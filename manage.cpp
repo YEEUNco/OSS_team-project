@@ -185,6 +185,22 @@ void push(pList p, string namex, string gux, string typex, string timex, string 
 }
 */
 
+void show(pList p){
+	if (empty(p)) {
+		cout << "\n\t정보가 없습니다.\n";
+		return;
+	}
+
+	pNode curr=begin(p);
+	while(curr!=end(p)){
+		cout << curr->name << "\t" << curr->gu << "\t" << curr->type << "\t" << curr->time <<"\t"<<curr->breakTime<< "\t" << curr->off<<"\t" << curr->rating << "\t" << curr->book <<"\n";
+		curr = curr->next;
+	}
+
+
+
+}
+
 void FileLoad(pList p){
 
 }
@@ -194,5 +210,5 @@ void FileSave(pList p){
 }
 
 int main(){
-    
+	
 }
