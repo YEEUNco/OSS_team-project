@@ -3,7 +3,9 @@
 #include <cassert>
 #include <iomanip>
 #include <string>
-
+#include <fstream>
+#include <sstream>
+#include <vector>
 using namespace std;
 
 struct Node{
@@ -250,7 +252,6 @@ void update(pList p, string namex, string gux, string typex, string timex, strin
 	N->reviewNum = reviewNumx;
 	N->book = bookx;
 	N->breakTime = breakTimes;
-
 }
 
 
@@ -276,12 +277,72 @@ int selectmenu(){
     return menu;
 }
 
-void FileLoad(pList p){
+void FileLoad(List& pList, const string& filename){
+    ifstream file(filename);
+    if (file.is_open()) {
+        pNode curr = pList.head->next;
+        pList.head->next = pList.tail;
+        pList.tail->prev = pList.head;
 
+        string line;
+        while (getline(file, line)) {
+            
+            vector<string> values;
+            stringstream ss(line);
+            string value;
+            while (getline(ss, value, ',')) {
+                values.push_back(value);
+            }
+
+            Node* newNode = new Node();
+            newNode->name = values[0];
+            newNode->gu = values[1];
+            newNode->type = values[2];
+            newNode->time = values[3];
+            newNode->off = values[4];
+            newNode->rating = values[5];
+            newNode->reviewNum = stoi(values[6]);
+            newNode->book = values[7];
+            newNode->breakTime = values[8];
+
+            pNode lastNode = pList.tail->prev;
+            lastNode->next = newNode;
+            newNode->prev = lastNode;
+            newNode->next = pList.tail;
+            pList.tail->prev = newNode;
+        }
+
+        file.close();
+        cout << "파일 로딩 성공." << endl;
+    } else {
+        cout << "파일 로딩 오류." << endl;
+    }
 }
 
-void FileSave(pList p){
-	
+void FileSave(const List& pList, const string& filename){
+	ofstream file(filename);
+    if (file.is_open()) {
+        pNode curr = pList.head->next;
+        while (curr != pList.tail) {
+
+            file << curr->name << ",";
+            file << curr->gu << ",";
+            file << curr->type << ",";
+            file << curr->time << ",";
+            file << curr->off << ",";
+            file << curr->rating << ",";
+            file << curr->reviewNum << ",";
+            file << curr->book << ",";
+            file << curr->breakTime << endl;
+
+            curr = curr->next;
+        }
+
+        file.close();
+        cout << "파일 저장 성공." << endl;
+    } else {
+        cout << "파일 저장 오류." << endl;
+    }
 }
 
 int main(){
