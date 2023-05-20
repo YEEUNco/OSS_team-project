@@ -123,11 +123,11 @@ pNode findName(pList p ,pNode curr, string str) {
 
 	return curr;
 }
-
+//노드가 0개인지 확인해주는 함수
 bool empty(pList p) {
 	return begin(p) == end(p);
 }
-
+//모든 노드를 지우는 함수
 void clear(pList p) {
 	if (empty(p)) return;
 
@@ -143,7 +143,7 @@ void clear(pList p) {
 	p->tail->prev = p->head;			// set head at tail
 	cout << "\n\tCleared...\n";
 }
-
+//노드의 개수를 찾는 함수
 int size(pList p) {
 	int count = 0;
 	for (pNode c = begin(p); c != end(p); c = c->next)
@@ -151,13 +151,14 @@ int size(pList p) {
 	return count;
 }
 
-
+//실질적으로 노드 지우는 함수
 void erase(pNode x) {
 	x->prev->next = x->next;
 	x->next->prev = x->prev;
 	delete x;
 }
-//이부분도 고칠 것!!
+
+//노드를 삽입해주는 함수
 void insert(pNode x, string namex, string gux, string typex, string timex, string offx, string ratingx, int reviewNumx, string bookx, string breakTimex) {
 	pNode node = new Node{ namex,gux, typex, timex, offx, ratingx, reviewNumx, bookx,  breakTimex , x->prev, x };
 	x->prev = x->prev->next = node;
@@ -211,7 +212,7 @@ void pop_backN(pList p, int N) {
 	cout << "\n";
 }
 */
-
+//끝에 노드를 추가하는 함수
 void push_back(pList p, string namex, string gux, string typex, string timex, string offx, string ratingx, int reviewNumx, string bookx, string breakTimex) {
 	insert(end(p), namex, gux, typex,timex, offx, ratingx, reviewNumx,bookx, breakTimex );
 }
@@ -224,7 +225,7 @@ void push(pList p, string namex, string gux, string typex, string timex, string 
 
 }
 */
-
+//정보를 보여주는 함수
 void show(pList p){
 	if (empty(p)) {
 		cout << "\n정보가 없습니다.\n";
@@ -236,7 +237,7 @@ void show(pList p){
 		cout << curr->name << "\t" << curr->gu << "\t" << curr->type << "\t" << curr->time <<"\t"<<curr->breakTime<< "\t" << curr->off<<"\t" << curr->rating << "\t" << curr->book <<"\n";
 		curr = curr->next;
 	}
-
+//update해주는 함수
 void update(pList p, string namex, string gux, string typex, string timex, string offx, string ratingx, int reviewNumx, string bookx, string breakTimex){
 	pNode = N;
 	forUpdate = findName(p, namex);
@@ -255,7 +256,7 @@ void update(pList p, string namex, string gux, string typex, string timex, strin
 
 
 }
-//printf("이름 지역 종류 영업시간 브레이크타임 휴무일 예약유무 별점");
+//메뉴 선택할 수 있는 함수
 int selectmenu(){
     int menu;
     printf("\n*** 맛집 리스트 ***\n");
