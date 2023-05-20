@@ -66,7 +66,7 @@ pNode last(pList p) {
 pNode findGu(pList p, string str) {
 	
 	pNode curr = begin(p);
-	while(curr!=end(p) && curr->str != str){
+	while(curr!=end(p) && curr->gu != str){
 		curr=curr->next;
 	}
 
@@ -87,7 +87,7 @@ pNode findGu(pList p, pNode curr, string str) {
 pNode findType(pList p, string str) {
 	
 	pNode curr = begin(p);
-	while(curr!=end(p) && curr->str != str){
+	while(curr!=end(p) && curr->type != str){
 		
 		curr=curr->next;
 	}
@@ -108,7 +108,7 @@ pNode findType(pList p, pNode curr, string str) {
 
 pNode findName(pList p, string str){
     pNode curr = begin(p);
-    while(curr != end(p) && curr->str != str ){
+    while(curr != end(p) && curr->name != str ){
 		curr = curr->next;
 	}
         
@@ -239,10 +239,12 @@ void show(pList p){
 		cout << curr->name << "\t" << curr->gu << "\t" << curr->type << "\t" << curr->time <<"\t"<<curr->breakTime<< "\t" << curr->off<<"\t" << curr->rating << "\t" << curr->book <<"\n";
 		curr = curr->next;
 	}
+}
+
 //update해주는 함수
 void update(pList p, string namex, string gux, string typex, string timex, string offx, string ratingx, int reviewNumx, string bookx, string breakTimex){
-	pNode = N;
-	forUpdate = findName(p, namex);
+	
+	pNode N = findName(p, namex);
 	N->name = namex;
 	N->gu = gux;
 	N->type = typex;
@@ -251,12 +253,11 @@ void update(pList p, string namex, string gux, string typex, string timex, strin
 	N->rating = ratingx;
 	N->reviewNum = reviewNumx;
 	N->book = bookx;
-	N->breakTime = breakTimes;
+	N->breakTime = breakTimex;
+
+	return;
 }
 
-
-
-}
 //메뉴 선택할 수 있는 함수
 int selectmenu(){
     int menu;
@@ -273,6 +274,7 @@ int selectmenu(){
 	cout << "10. 맛집 지역으로 검색하기\n";
 	cout << "11. 맛집 종류로 검색하기\n";
 	cout << "0. 종료";
+	cout << "\n\n원하는 메뉴의 번호를 입력해주세요 ";
     cin >> menu;
     return menu;
 }
@@ -443,9 +445,9 @@ int main(){
 			printf("이름\t지역\t종류\t영업시간\t브레이크타임\t휴무일\t예약유무\t별점");
 			pNode node=begin(p);
 			while(node != end(p)){
-				node = findName(node, namex);
-				cout << curr->name << "\t" << curr->gu << "\t" << curr->type << "\t" << curr->time <<"\t"<<curr->breakTime<< "\t" << curr->off<<"\t" << curr->rating << "\t" << curr->book <<"\n";
-				curr = curr->next;
+				node = findName(p,node, namex);
+				cout << node->name << "\t" << node->gu << "\t" << node->type << "\t" << node->time <<"\t"<<node->breakTime<< "\t" << node->off<<"\t" << node->rating << "\t" << node->book <<"\n";
+				node = node->next;
 			}
 		}
 		else if(menu == 10){
@@ -455,9 +457,9 @@ int main(){
 			printf("이름\t지역\t종류\t영업시간\t브레이크타임\t휴무일\t예약유무\t별점");
 			pNode node=begin(p);
 			while(node != end(p)){
-				node = findGu(node, gux);
-				cout << curr->name << "\t" << curr->gu << "\t" << curr->type << "\t" << curr->time <<"\t"<<curr->breakTime<< "\t" << curr->off<<"\t" << curr->rating << "\t" << curr->book <<"\n";
-				curr = curr->next;
+				node = findGu(p, node, gux);
+				cout << node->name << "\t" << node->gu << "\t" << node->type << "\t" << node->time <<"\t"<<node->breakTime<< "\t" << node->off<<"\t" << node->rating << "\t" << node->book <<"\n";
+				node = node->next;
 			}
 		}
 		else if(menu == 11){
@@ -467,9 +469,9 @@ int main(){
 			printf("이름\t지역\t종류\t영업시간\t브레이크타임\t휴무일\t예약유무\t별점");
 			pNode node=begin(p);
 			while(node != end(p)){
-				node = findType(node, typex);
-				cout << curr->name << "\t" << curr->gu << "\t" << curr->type << "\t" << curr->time <<"\t"<<curr->breakTime<< "\t" << curr->off<<"\t" << curr->rating << "\t" << curr->book <<"\n";
-				curr = curr->next;
+				node = findType(p, node, typex);
+				cout << node->name << "\t" << node->gu << "\t" << node->type << "\t" << node->time <<"\t"<<node->breakTime<< "\t" << node->off<<"\t" << node->rating << "\t" << node->book <<"\n";
+				node = node->next;
 			}
 		}
 	}
