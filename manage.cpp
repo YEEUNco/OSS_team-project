@@ -237,8 +237,8 @@ void show(pList p){
 
 	pNode curr=begin(p);
 	while(curr!=end(p)){
-		//cout << curr->name << "\t" << curr->gu << "\t" << curr->type << "\t" << curr->time <<"\t"<<curr->breakTime<< "\t" << curr->off<<"\t" << curr->rating << "\t" << curr->book <<"\n";
-		printf("%-40s %-20s %-8s %-11s   %-2s   %-4s   %-s   %-11s\n", (curr->name).c_str(), (curr->gu).c_str(), (curr->type).c_str(), (curr->time).c_str(), (curr->breakTime).c_str(), (curr->off).c_str(), (curr->rating).c_str(), (curr->book).c_str());
+		cout << curr->name << "\t" << curr->gu << "\t" << curr->type << "\t" << curr->time <<"\t"<<curr->breakTime<< "\t" << curr->off<<"\t" << curr->rating << "\t" << curr->book <<"\n";
+		//printf("%-40s %-20s %-8s %-11s   %-2s   %-4s   %-s   %-11s\n", (curr->name).c_str(), (curr->gu).c_str(), (curr->type).c_str(), (curr->time).c_str(), (curr->breakTime).c_str(), (curr->off).c_str(), (curr->rating).c_str(), (curr->book).c_str());
 		curr = curr->next;
 	}
 }
@@ -279,8 +279,8 @@ void search(pList p, string str, pNode (*find)(pList, pNode, string)){
 	pNode node=begin(p);
 	while(node != end(p)){
 		node = find(p, node, str);
-		//cout << node->name << "\t" << node->gu << "\t" << node->type << "\t" << node->time <<"\t"<<node->breakTime<< "\t" << node->off<<"\t" << node->rating << "\t" << node->book <<"\n";
-		printf("%-40s %-20s %-8s %-11s   %-2s   %-4s   %-s   %-11s\n", (node->name).c_str(), (node->gu).c_str(), (node->type).c_str(), (node->time).c_str(), (node->breakTime).c_str(), (node->off).c_str(), (node->rating).c_str(), (node->book).c_str());
+		cout << node->name << "\t" << node->gu << "\t" << node->type << "\t" << node->time <<"\t"<<node->breakTime<< "\t" << node->off<<"\t" << node->rating << "\t" << node->book <<"\n";
+		//printf("%-40s %-20s %-8s %-11s   %-2s   %-4s   %-s   %-11s\n", (node->name).c_str(), (node->gu).c_str(), (node->type).c_str(), (node->time).c_str(), (node->breakTime).c_str(), (node->off).c_str(), (node->rating).c_str(), (node->book).c_str());
 		node = node->next;
 	}
 }
@@ -424,7 +424,7 @@ int main(){
 			string breakTimex;
 			int num = 0;
 
-			cout << "맛집 이름을 입력해주세요 ";
+			cout << "업데이트 할 맛집 이름을 입력해주세요 ";
 			getline(cin,namex);
 			cout << "맛집의 구를 입력해주세요 ";
 			getline(cin,gux);
