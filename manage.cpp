@@ -129,6 +129,7 @@ pNode findName(pList p ,pNode curr, string str) {
 bool empty(pList p) {
 	return begin(p) == end(p);
 }
+
 //모든 노드를 지우는 함수
 void clear(pList p) {
 	if (empty(p)) return;
@@ -145,6 +146,7 @@ void clear(pList p) {
 	p->tail->prev = p->head;			// set head at tail
 	cout << "\n\tCleared...\n";
 }
+
 //노드의 개수를 찾는 함수
 int size(pList p) {
 	int count = 0;
@@ -187,9 +189,9 @@ void pop_back(pList p) {
 
 //crud의 delete기능
 void pop(pList p, string str) {
-	//cout << "your code here\n";
 	erase(p, findName(p, str));
 }
+
 //모두 delete
 void pop_all(pList p, string str) {
 	for (pNode c = begin(p); c != end(p); c = c->next) {
@@ -273,7 +275,7 @@ int selectmenu(){
 	cout << "9.  맛집 이름으로 검색하기\n";
 	cout << "10. 맛집 지역으로 검색하기\n";
 	cout << "11. 맛집 종류로 검색하기\n";
-	cout << "0. 종료";
+	cout << "0.  종료";
 	cout << "\n\n원하는 메뉴의 번호를 입력해주세요 ";
     cin >> menu;
     return menu;
@@ -368,21 +370,21 @@ int main(){
 			int num = 0;
 
 			cout << "맛집 이름을 입력해주세요 ";
-			cin >> namex;
+			getline(cin,namex);
 			cout << "맛집의 구를 입력해주세요 ";
-			cin >> gux;
-			cout << "맛집의 음식 종료를 입력해주세요 ";
-			cin >> typex;
+			getline(cin,gux);
+			cout << "맛집의 음식 종류를 입력해주세요 ";
+			getline(cin,typex);
 			cout << "맛집의 영업시간을 입력해주세요 ";
-			cin >> timex;
+			getline(cin,timex);
 			cout << "맛집의 브레이크 타임을 입력해주세요 ";
-			cin >> breakTimex;
+			getline(cin,breakTimex )
 			cout << "맛집의 휴무일을 입력해주세요 ";
-			cin >> offx;
+			getline(cin,offx);
 			cout << "맛집의 별점을 현황을 알려주세요 ";
-			cin >> ratingx;
+			getline(cin, ratingx);
 			cout << "맛집의 예약 유무를 알려주세요 ";
-			cin >> bookx;
+			getline(cin,bookx);
 
 			push_back(p, namex, gux, typex, timex, offx, ratingx, num, bookx, breakTimex);
 		}
@@ -402,28 +404,28 @@ int main(){
 			int num = 0;
 
 			cout << "맛집 이름을 입력해주세요 ";
-			cin >> namex;
+			getline(cin,namex);
 			cout << "맛집의 구를 입력해주세요 ";
-			cin >> gux;
-			cout << "맛집의 음식 종료를 입력해주세요 ";
-			cin >> typex;
+			getline(cin,gux);
+			cout << "맛집의 음식 종류를 입력해주세요 ";
+			getline(cin,typex);
 			cout << "맛집의 영업시간을 입력해주세요 ";
-			cin >> timex;
+			getline(cin,timex);
 			cout << "맛집의 브레이크 타임을 입력해주세요 ";
-			cin >> breakTimex;
+			getline(cin,breakTimex )
 			cout << "맛집의 휴무일을 입력해주세요 ";
-			cin >> offx;
+			getline(cin,offx);
 			cout << "맛집의 별점을 현황을 알려주세요 ";
-			cin >> ratingx;
+			getline(cin, ratingx);
 			cout << "맛집의 예약 유무를 알려주세요 ";
-			cin >> bookx;
+			getline(cin,bookx);
 
 			update(p, namex, gux, typex, timex, offx, ratingx, num, bookx, breakTimex);
 		}
 		else if(menu == 4){
 			string namex;
 			cout << "삭제할 맛집 이름을 입력해주세요";
-			cin >> namex;
+			getline(cin,namex);
 			pop(p, namex);
 		}
 		else if(menu == 5){
@@ -433,7 +435,19 @@ int main(){
 
 		}
 		else if(menu == 7){
+			pNode curr;
+			string namex;
 
+			cout << "리뷰를 입력하고 싶은 맛집의 이름을 입력해주세요 ";
+			getline(cin,namex);
+			curr = findName(p, namex);
+			if(curr == end(p)) cout << "맛집이 존재하지 않습니다\n\n";
+			else {
+				string revi;
+				cout << "리뷰를 입력해주세요 ";
+			}
+			
+			
 		}
 		else if(menu == 8){
 
@@ -441,7 +455,7 @@ int main(){
 		else if(menu == 9){
 			string namex;
 			cout << "조회할 이름을 입력하세요 ";
-			cin >> namex;
+			getline(cin,namex);
 			printf("이름\t지역\t종류\t영업시간\t브레이크타임\t휴무일\t예약유무\t별점");
 			pNode node=begin(p);
 			while(node != end(p)){
@@ -453,7 +467,7 @@ int main(){
 		else if(menu == 10){
 			string gux;
 			cout << "조회할 구을 입력하세요 ";
-			cin >> gux;
+			getline(cin,gux);
 			printf("이름\t지역\t종류\t영업시간\t브레이크타임\t휴무일\t예약유무\t별점");
 			pNode node=begin(p);
 			while(node != end(p)){
@@ -465,7 +479,7 @@ int main(){
 		else if(menu == 11){
 			string typex;
 			cout << "조회할 종류을 입력하세요 ";
-			cin >> typex;
+			getline(cin,typex);
 			printf("이름\t지역\t종류\t영업시간\t브레이크타임\t휴무일\t예약유무\t별점");
 			pNode node=begin(p);
 			while(node != end(p)){
