@@ -291,7 +291,7 @@ void readReview(pList p, string namex){
 	pNode curr =findName(p,namex);
 	if(curr!=end(p)){
 		for(int i=0; i<(curr->review).size(); i++){
-			cout << (curr->review)[i] << "\n";
+			cout << "*" << (curr->review)[i] << "\n";
 		}
 	}
 	else
