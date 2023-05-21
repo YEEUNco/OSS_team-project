@@ -319,12 +319,10 @@ int selectmenu(){
     return menu;
 }
 
-void FileLoad(List& pList, const string& filename){
+void FileLoad(pList p, string filename){
     ifstream file(filename);
     if (file.is_open()) {
-        pNode curr = pList.head->next;
-        pList.head->next = pList.tail;
-        pList.tail->prev = pList.head;
+        pNode curr = begin(p);
 
         string line;
         while (getline(file, line)) {
@@ -343,15 +341,10 @@ void FileLoad(List& pList, const string& filename){
             newNode->time = values[3];
             newNode->off = values[4];
             newNode->rating = values[5];
-            newNode->reviewNum = stoi(values[6]);
-            newNode->book = values[7];
-            newNode->breakTime = values[8];
+            newNode->book = values[6];
+            newNode->breakTime = values[7];
 
-            pNode lastNode = pList.tail->prev;
-            lastNode->next = newNode;
-            newNode->prev = lastNode;
-            newNode->next = pList.tail;
-            pList.tail->prev = newNode;
+            pNode last = push_back(p, newNode->name, newNode->gu, newNode->type, newNode->time, newNode->off, newNode->rating, newNode->reviewNum, newNode->book, newNode->breakTime);
         }
 
         file.close();
@@ -361,11 +354,11 @@ void FileLoad(List& pList, const string& filename){
     }
 }
 
-void FileSave(const List& pList, const string& filename){
+void FileSave(pList p, string filename){
 	ofstream file(filename);
     if (file.is_open()) {
-        pNode curr = pList.head->next;
-        while (curr != pList.tail) {
+        pNode curr = begin(p);
+        while (curr != p->tail) {
 
             file << curr->name << ",";
             file << curr->gu << ",";
@@ -373,7 +366,6 @@ void FileSave(const List& pList, const string& filename){
             file << curr->time << ",";
             file << curr->off << ",";
             file << curr->rating << ",";
-            file << curr->reviewNum << ",";
             file << curr->book << ",";
             file << curr->breakTime << endl;
 
