@@ -260,6 +260,44 @@ void update(pList p, string namex, string gux, string typex, string timex, strin
 	return;
 }
 
+//review를 입력하는 함수
+void insertReview(pList p, string namex){
+	pNode curr;
+	curr = findName(p, namex);
+	if(curr == end(p)) cout << "맛집이 존재하지 않습니다\n\n";
+	else {
+		string revi;
+		cout << "리뷰를 입력해주세요 ";
+		getline(cin, revi);
+		(curr->review).push_back(revi);
+	}
+}
+
+//구, 맛집 이름, 음식 종류로 찾아서 출력하는 함수
+void search(pList p, string str, pNode (*find)(pList, pNode, string)){
+	printf("이름\t지역\t종류\t영업시간\t브레이크타임\t휴무일\t예약유무\t별점");
+	pNode node=begin(p);
+	while(node != end(p)){
+		node = find(p, node, str);
+		cout << node->name << "\t" << node->gu << "\t" << node->type << "\t" << node->time <<"\t"<<node->breakTime<< "\t" << node->off<<"\t" << node->rating << "\t" << node->book <<"\n";
+		node = node->next;
+	}
+}
+
+//맛집 리뷰를 보는 함수
+void readReview(pList p, string namex){
+	pNode curr =findName(p,namex);
+	if(curr!=end(p)){
+		for(int i=0; i<(curr->review).size(); i++){
+			cout << (curr->review)[i] << "\n";
+		}
+	}
+	else
+		cout << "맛집을 찾을 수 없습니다\n\n";
+
+	return;
+}
+
 //메뉴 선택할 수 있는 함수
 int selectmenu(){
     int menu;
@@ -350,8 +388,7 @@ void FileSave(const List& pList, const string& filename){
 }
 
 int main(){
-	pList p;
-
+	pList p= new List();
 
 	while(1){
 		int menu = selectmenu();
@@ -435,58 +472,38 @@ int main(){
 
 		}
 		else if(menu == 7){
-			pNode curr;
 			string namex;
 
 			cout << "리뷰를 입력하고 싶은 맛집의 이름을 입력해주세요 ";
 			getline(cin,namex);
-			curr = findName(p, namex);
-			if(curr == end(p)) cout << "맛집이 존재하지 않습니다\n\n";
-			else {
-				string revi;
-				cout << "리뷰를 입력해주세요 ";
-			}
+			insertReview(p,namex);
 			
 			
 		}
 		else if(menu == 8){
-
+			string namex;
+			cout << "리뷰를 보고 싶은 맛집의 이름을 입력해주세요 ";
+			getline(cin, namex);
+			readReview(p, namex);
 		}
 		else if(menu == 9){
 			string namex;
 			cout << "조회할 이름을 입력하세요 ";
 			getline(cin,namex);
-			printf("이름\t지역\t종류\t영업시간\t브레이크타임\t휴무일\t예약유무\t별점");
-			pNode node=begin(p);
-			while(node != end(p)){
-				node = findName(p,node, namex);
-				cout << node->name << "\t" << node->gu << "\t" << node->type << "\t" << node->time <<"\t"<<node->breakTime<< "\t" << node->off<<"\t" << node->rating << "\t" << node->book <<"\n";
-				node = node->next;
-			}
+			search(p,namex,findName);
 		}
 		else if(menu == 10){
 			string gux;
 			cout << "조회할 구을 입력하세요 ";
 			getline(cin,gux);
-			printf("이름\t지역\t종류\t영업시간\t브레이크타임\t휴무일\t예약유무\t별점");
-			pNode node=begin(p);
-			while(node != end(p)){
-				node = findGu(p, node, gux);
-				cout << node->name << "\t" << node->gu << "\t" << node->type << "\t" << node->time <<"\t"<<node->breakTime<< "\t" << node->off<<"\t" << node->rating << "\t" << node->book <<"\n";
-				node = node->next;
-			}
+			search(p,gux,findGu);
+			
 		}
 		else if(menu == 11){
 			string typex;
 			cout << "조회할 종류을 입력하세요 ";
 			getline(cin,typex);
-			printf("이름\t지역\t종류\t영업시간\t브레이크타임\t휴무일\t예약유무\t별점");
-			pNode node=begin(p);
-			while(node != end(p)){
-				node = findType(p, node, typex);
-				cout << node->name << "\t" << node->gu << "\t" << node->type << "\t" << node->time <<"\t"<<node->breakTime<< "\t" << node->off<<"\t" << node->rating << "\t" << node->book <<"\n";
-				node = node->next;
-			}
+			search(p,typex,findType);
 		}
 	}
 }
