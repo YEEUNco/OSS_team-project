@@ -378,7 +378,7 @@ int main(){
 			cout << "맛집의 영업시간을 입력해주세요 ";
 			getline(cin,timex);
 			cout << "맛집의 브레이크 타임을 입력해주세요 ";
-			getline(cin,breakTimex )
+			getline(cin,breakTimex );
 			cout << "맛집의 휴무일을 입력해주세요 ";
 			getline(cin,offx);
 			cout << "맛집의 별점을 현황을 알려주세요 ";
@@ -412,7 +412,7 @@ int main(){
 			cout << "맛집의 영업시간을 입력해주세요 ";
 			getline(cin,timex);
 			cout << "맛집의 브레이크 타임을 입력해주세요 ";
-			getline(cin,breakTimex )
+			getline(cin,breakTimex );
 			cout << "맛집의 휴무일을 입력해주세요 ";
 			getline(cin,offx);
 			cout << "맛집의 별점을 현황을 알려주세요 ";
