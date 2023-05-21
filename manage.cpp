@@ -275,7 +275,7 @@ void insertReview(pList p, string namex){
 
 //구, 맛집 이름, 음식 종류로 찾아서 출력하는 함수
 void search(pList p, string str, pNode (*find)(pList, pNode, string)){
-	printf("이름\t지역\t종류\t영업시간\t브레이크타임\t휴무일\t별점\t예약유무");
+	printf("이름\t지역\t종류\t영업시간\t브레이크타임\t휴무일\t별점\t예약유무\n");
 	pNode node=begin(p);
 	while(node != end(p)){
 		node = find(p, node, str);
@@ -444,7 +444,7 @@ int main(){
 		}
 		else if(menu == 4){
 			string namex;
-			cout << "삭제할 맛집 이름을 입력해주세요";
+			cout << "삭제할 맛집 이름을 입력해주세요 ";
 			getline(cin,namex);
 			pop(p, namex);
 		}
