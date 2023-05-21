@@ -316,11 +316,12 @@ int selectmenu(){
 	cout << "0.  종료";
 	cout << "\n\n원하는 메뉴의 번호를 입력해주세요 ";
     cin >> menu;
+	cin.ignore();
     return menu;
 }
 
-void FileLoad(pList p, string filename){
-    ifstream file(filename);
+void FileLoad(pList p){
+    ifstream file("matziplist.csv");
     if (file.is_open()) {
         pNode curr = begin(p);
 
@@ -334,17 +335,7 @@ void FileLoad(pList p, string filename){
                 values.push_back(value);
             }
 
-            Node* newNode = new Node();
-            newNode->name = values[0];
-            newNode->gu = values[1];
-            newNode->type = values[2];
-            newNode->time = values[3];
-            newNode->off = values[4];
-            newNode->rating = values[5];
-            newNode->book = values[6];
-            newNode->breakTime = values[7];
-
-            pNode last = push_back(p, newNode->name, newNode->gu, newNode->type, newNode->time, newNode->off, newNode->rating, newNode->reviewNum, newNode->book, newNode->breakTime);
+            push_back(p, values[0], values[1], values[2], values[3], values[4], values[5],0,values[6], values[7]);
         }
 
         file.close();
@@ -358,7 +349,7 @@ void FileSave(pList p, string filename){
 	ofstream file(filename);
     if (file.is_open()) {
         pNode curr = begin(p);
-        while (curr != p->tail) {
+        while (curr != end(p)) {
 
             file << curr->name << ",";
             file << curr->gu << ",";
@@ -418,7 +409,7 @@ int main(){
 			push_back(p, namex, gux, typex, timex, offx, ratingx, num, bookx, breakTimex);
 		}
 		else if(menu == 2){
-			printf("이름\t지역\t종류\t영업시간\t브레이크타임\t휴무일\t예약유무\t별점");
+			printf("이름\t지역\t종류\t영업시간\t브레이크타임\t휴무일\t예약유무\t별점\n");
 			show(p);
 		}
 		else if(menu == 3){
@@ -458,16 +449,13 @@ int main(){
 			pop(p, namex);
 		}
 		else if(menu == 5){
-			string filename;
-    		cout << "불러올 파일명을 입력하세요: ";
-   			cin >> filename;
-    		FileLoad(*p, filename);
+    		FileLoad(p);
 		}
 		else if(menu == 6){
 			string filename;
 			cout << "저장할 파일명을 입력하세요: ";
 			cin >> filename;
-			FileSave(*p, filename);
+			FileSave(p, filename);
 		}
 		else if(menu == 7){
 			string namex;
