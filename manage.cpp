@@ -75,7 +75,7 @@ pNode findGu(pList p, string str) {
 //일부 문자열이 일치하는 구를 찾는 함수
 pNode findGu(pList p, pNode curr, string str) {
 	
-	while((curr->name).find(str) == string::npos && curr != end(p)){
+	while((curr->gu).find(str) == string::npos && curr != end(p)){
 		curr=curr->next;
 	}
 
@@ -97,7 +97,7 @@ pNode findType(pList p, string str) {
 //일부 문자열이 일치하는 음식 타입을 찾는 함수
 pNode findType(pList p, pNode curr, string str) {
 	
-	while((curr->name).find(str) == string::npos && curr != end(p)){
+	while((curr->type).find(str) == string::npos && curr != end(p)){
 		curr=curr->next;
 	}
 
@@ -279,6 +279,7 @@ void search(pList p, string str, pNode (*find)(pList, pNode, string)){
 	pNode node=begin(p);
 	while(node != end(p)){
 		node = find(p, node, str);
+		if(node == end(p)) break;
 		cout << node->name << "\t" << node->gu << "\t" << node->type << "\t" << node->time <<"\t"<<node->breakTime<< "\t" << node->off<<"\t" << node->rating << "\t" << node->book <<"\n";
 		//printf("%-40s %-20s %-8s %-11s   %-2s   %-4s   %-s   %-11s\n", (node->name).c_str(), (node->gu).c_str(), (node->type).c_str(), (node->time).c_str(), (node->breakTime).c_str(), (node->off).c_str(), (node->rating).c_str(), (node->book).c_str());
 		node = node->next;
