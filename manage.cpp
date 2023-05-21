@@ -21,14 +21,13 @@ struct Node{
     vector<string> review;
     Node* prev;
     Node* next;
-    Node(string n = "name", string g = "gu", string ty = "type", string ti = "time", string o = "off",string ra = "rating", int re = 0, string bo = "book", string bre = "break",Node* p = nullptr, Node* x = nullptr){
+    Node(string n = "name", string g = "gu", string ty = "type", string ti = "time", string bre = "break", string o = "off", string ra = "rating", string bo = "book", Node* p = nullptr, Node* x = nullptr){
 		name = n;
 		gu = g;
 		type = ty;
 		time = ti;
 		off = o;
 		rating = ra;
-		reviewNum = re;
 		book = bo;
 		breakTime = bre;
         prev = p; next = x;
@@ -163,8 +162,8 @@ void erase(pNode x) {
 }
 
 //노드를 삽입해주는 함수
-void insert(pNode x, string namex, string gux, string typex, string timex, string offx, string ratingx, int reviewNumx, string bookx, string breakTimex) {
-	pNode node = new Node{ namex,gux, typex, timex, offx, ratingx, reviewNumx, bookx,  breakTimex , x->prev, x };
+void insert(pNode x, string namex, string gux, string typex, string timex, string breakTimex, string offx, string ratingx, string bookx) {
+	pNode node = new Node{ namex, gux, typex, timex, breakTimex, offx, ratingx, bookx , x->prev, x };
 	x->prev = x->prev->next = node;
 
 }
@@ -217,8 +216,8 @@ void pop_backN(pList p, int N) {
 }
 */
 //끝에 노드를 추가하는 함수
-void push_back(pList p, string namex, string gux, string typex, string timex, string offx, string ratingx, int reviewNumx, string bookx, string breakTimex) {
-	insert(end(p), namex, gux, typex,timex, offx, ratingx, reviewNumx,bookx, breakTimex );
+void push_back(pList p, string namex, string gux, string typex, string timex, string breakTimex, string offx, string ratingx, string bookx) {
+	insert(end(p), namex, gux, typex, timex, breakTimex, offx, ratingx, bookx);
 }
 /* 굳이 필요없는 기능..
 void push(pList p, string namex, string gux, string typex, string timex, string offx, string ratingx, int reviewNumx, string bookx, string breakTimex, int x) {
@@ -238,13 +237,14 @@ void show(pList p){
 
 	pNode curr=begin(p);
 	while(curr!=end(p)){
-		cout << curr->name << "\t" << curr->gu << "\t" << curr->type << "\t" << curr->time <<"\t"<<curr->breakTime<< "\t" << curr->off<<"\t" << curr->rating << "\t" << curr->book <<"\n";
+		//cout << curr->name << "\t" << curr->gu << "\t" << curr->type << "\t" << curr->time <<"\t"<<curr->breakTime<< "\t" << curr->off<<"\t" << curr->rating << "\t" << curr->book <<"\n";
+		printf("%14s %4s %8s %11s %2s %4s %s %11s\n", curr->name.c_str(), curr->gu.c_str(), curr->type.c_str(), curr->time.c_str(), curr->breakTime.c_str(), curr->off.c_str(), curr->rating.c_str(), curr->book.c_str());
 		curr = curr->next;
 	}
 }
 
 //update해주는 함수
-void update(pList p, string namex, string gux, string typex, string timex, string offx, string ratingx, int reviewNumx, string bookx, string breakTimex){
+void update(pList p, string namex, string gux, string typex, string timex, string breakTimex , string offx, string ratingx, string bookx){
 	
 	pNode N = findName(p, namex);
 	N->name = namex;
@@ -253,7 +253,6 @@ void update(pList p, string namex, string gux, string typex, string timex, strin
 	N->time = timex;
 	N->off = offx;
 	N->rating = ratingx;
-	N->reviewNum = reviewNumx;
 	N->book = bookx;
 	N->breakTime = breakTimex;
 
@@ -279,7 +278,8 @@ void search(pList p, string str, pNode (*find)(pList, pNode, string)){
 	pNode node=begin(p);
 	while(node != end(p)){
 		node = find(p, node, str);
-		cout << node->name << "\t" << node->gu << "\t" << node->type << "\t" << node->time <<"\t"<<node->breakTime<< "\t" << node->off<<"\t" << node->rating << "\t" << node->book <<"\n";
+		//cout << node->name << "\t" << node->gu << "\t" << node->type << "\t" << node->time <<"\t"<<node->breakTime<< "\t" << node->off<<"\t" << node->rating << "\t" << node->book <<"\n";
+		printf("%14s %4s %8s %11s %2s %4s %s %11s\n", node->name.c_str(), node->gu.c_str(), node->type.c_str(), node->time.c_str(), node->breakTime.c_str(), node->off.c_str(), node->rating.c_str(), node->book.c_str());
 		node = node->next;
 	}
 }
@@ -335,7 +335,7 @@ void FileLoad(pList p){
                 values.push_back(value);
             }
 
-            push_back(p, values[0], values[1], values[2], values[3], values[4], values[5],0,values[6], values[7]);
+            push_back(p, values[0], values[1], values[2], values[3], values[4], values[5],values[6], values[7]);
         }
 
         file.close();
@@ -406,7 +406,7 @@ int main(){
 			cout << "맛집의 예약 유무를 알려주세요 ";
 			getline(cin,bookx);
 
-			push_back(p, namex, gux, typex, timex, offx, ratingx, num, bookx, breakTimex);
+			push_back(p, namex, gux, typex, timex, breakTimex, offx, ratingx, bookx);
 		}
 		else if(menu == 2){
 			printf("이름\t지역\t종류\t영업시간\t브레이크타임\t휴무일\t별점\t예약유무\n");
@@ -440,7 +440,7 @@ int main(){
 			cout << "맛집의 예약 유무를 알려주세요 ";
 			getline(cin,bookx);
 
-			update(p, namex, gux, typex, timex, offx, ratingx, num, bookx, breakTimex);
+			update(p, namex, gux, typex, timex, breakTimex, offx, ratingx, bookx);
 		}
 		else if(menu == 4){
 			string namex;
