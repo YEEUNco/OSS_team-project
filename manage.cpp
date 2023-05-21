@@ -429,10 +429,16 @@ int main(){
 			pop(p, namex);
 		}
 		else if(menu == 5){
-
+			string filename;
+    		cout << "불러올 파일명을 입력하세요: ";
+   			cin >> filename;
+    		FileLoad(*p, filename);
 		}
 		else if(menu == 6){
-
+			string filename;
+			cout << "저장할 파일명을 입력하세요: ";
+			cin >> filename;
+			FileSave(*p, filename);
 		}
 		else if(menu == 7){
 			pNode curr;
