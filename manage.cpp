@@ -6,45 +6,8 @@
 #include <fstream>
 #include <sstream>
 #include <vector>
+#include "matzip.h"
 using namespace std;
-
-struct Node{
-    string name;
-    string gu;
-    string type;
-    string time;
-    string off;
-    string rating;
-	int reviewNum;
-	string book;
-	string breakTime;
-    vector<string> review;
-    Node* prev;
-    Node* next;
-    Node(string n = "name", string g = "gu", string ty = "type", string ti = "time", string bre = "break", string o = "off", string ra = "rating", string bo = "book", Node* p = nullptr, Node* x = nullptr){
-		name = n;
-		gu = g;
-		type = ty;
-		time = ti;
-		off = o;
-		rating = ra;
-		book = bo;
-		breakTime = bre;
-        prev = p; next = x;
-    }
-};
-
-struct List{
-    Node* head;
-    Node* tail;
-    List(){
-        head = new Node{}; tail = new Node{};
-        head->next = tail; tail->prev = head;
-    }
-};
-
-using pNode = Node*;
-using pList = List*;
 
 //첫번째 노드를 찾는 함수
 pNode begin(pList p) {
@@ -202,32 +165,12 @@ void pop_all(pList p, string str) {
 	} 	// O(n) 
 } // faster version
 
-/*
-void pop_backN(pList p, int N) {
 
-	int psize = size(p);
-	if (N <= 0 || N > psize) N = psize;
-	for (int i = 0; i < N; i++) {
-		if (i % 10000 == 0)
-			cout << setw(7) << "\r\tpopping [" << psize - i - 1 << "]        ";
-		pop_back(p);
-	}
-	cout << "\n";
-}
-*/
 //끝에 노드를 추가하는 함수
 void push_back(pList p, string namex, string gux, string typex, string timex, string breakTimex, string offx, string ratingx, string bookx) {
 	insert(end(p), namex, gux, typex, timex, breakTimex, offx, ratingx, bookx);
 }
-/* 굳이 필요없는 기능..
-void push(pList p, string namex, string gux, string typex, string timex, string offx, string ratingx, int reviewNumx, string bookx, string breakTimex, int x) {
-	
-	//cout << "your code here: use find()\n";
-	if(findName(p,namex)==end(p)) return;
-	insert(findName(p,namex),namex,gux, typex, timex, offx, ratingx, reviewNumx, bookx, breakTimex );
 
-}
-*/
 //정보를 보여주는 함수
 void show(pList p){
 	if (empty(p)) {
@@ -269,6 +212,7 @@ void insertReview(pList p, string namex){
 		cout << "리뷰를 입력해주세요 ";
 		getline(cin, revi);
 		(curr->review).push_back(revi);
+		curr->reviewNum=(curr->review).size();
 	}
 
 }
@@ -370,128 +314,4 @@ void FileSave(pList p, string filename){
     } else {
         cout << "파일 저장 오류." << endl;
     }
-}
-
-int main(){
-	pList p= new List();
-
-	while(1){
-		int menu = selectmenu();
-		if(menu==0){
-			break;
-		}
-		else if(menu == 1){
-			string namex;
-			string gux;
-			string typex;
-			string timex;
-			string offx;
-			string ratingx;
-			string bookx;
-			string breakTimex;
-			int num = 0;
-
-			cout << "맛집 이름을 입력해주세요 ";
-			getline(cin,namex);
-			cout << "맛집의 구를 입력해주세요 ";
-			getline(cin,gux);
-			cout << "맛집의 음식 종류를 입력해주세요 ";
-			getline(cin,typex);
-			cout << "맛집의 영업시간을 입력해주세요 ";
-			getline(cin,timex);
-			cout << "맛집의 브레이크 타임을 입력해주세요 ";
-			getline(cin,breakTimex );
-			cout << "맛집의 휴무일을 입력해주세요 ";
-			getline(cin,offx);
-			cout << "맛집의 별점을 현황을 알려주세요 ";
-			getline(cin, ratingx);
-			cout << "맛집의 예약 유무를 알려주세요 ";
-			getline(cin,bookx);
-
-			push_back(p, namex, gux, typex, timex, breakTimex, offx, ratingx, bookx);
-		}
-		else if(menu == 2){
-			printf("이름\t지역\t종류\t영업시간\t브레이크타임\t휴무일\t별점\t예약유무\n");
-			show(p);
-		}
-		else if(menu == 3){
-			string namex;
-			string gux;
-			string typex;
-			string timex;
-			string offx;
-			string ratingx;
-			string bookx;
-			string breakTimex;
-			int num = 0;
-
-			cout << "업데이트 할 맛집 이름을 입력해주세요 ";
-			getline(cin,namex);
-			cout << "맛집의 구를 입력해주세요 ";
-			getline(cin,gux);
-			cout << "맛집의 음식 종류를 입력해주세요 ";
-			getline(cin,typex);
-			cout << "맛집의 영업시간을 입력해주세요 ";
-			getline(cin,timex);
-			cout << "맛집의 브레이크 타임을 입력해주세요 ";
-			getline(cin,breakTimex );
-			cout << "맛집의 휴무일을 입력해주세요 ";
-			getline(cin,offx);
-			cout << "맛집의 별점을 현황을 알려주세요 ";
-			getline(cin, ratingx);
-			cout << "맛집의 예약 유무를 알려주세요 ";
-			getline(cin,bookx);
-
-			update(p, namex, gux, typex, timex, breakTimex, offx, ratingx, bookx);
-		}
-		else if(menu == 4){
-			string namex;
-			cout << "삭제할 맛집 이름을 입력해주세요 ";
-			getline(cin,namex);
-			pop(p, namex);
-		}
-		else if(menu == 5){
-    		FileLoad(p);
-		}
-		else if(menu == 6){
-			string filename;
-			cout << "저장할 파일명을 입력하세요: ";
-			cin >> filename;
-			FileSave(p, filename);
-		}
-		else if(menu == 7){
-			string namex;
-
-			cout << "리뷰를 입력하고 싶은 맛집의 이름을 입력해주세요 ";
-			getline(cin,namex);
-			insertReview(p,namex);
-			
-			
-		}
-		else if(menu == 8){
-			string namex;
-			cout << "리뷰를 보고 싶은 맛집의 이름을 입력해주세요 ";
-			getline(cin, namex);
-			readReview(p, namex);
-		}
-		else if(menu == 9){
-			string namex;
-			cout << "조회할 이름을 입력하세요 ";
-			getline(cin,namex);
-			search(p,namex,findName);
-		}
-		else if(menu == 10){
-			string gux;
-			cout << "조회할 구을 입력하세요 ";
-			getline(cin,gux);
-			search(p,gux,findGu);
-			
-		}
-		else if(menu == 11){
-			string typex;
-			cout << "조회할 종류을 입력하세요 ";
-			getline(cin,typex);
-			search(p,typex,findType);
-		}
-	}
 }
